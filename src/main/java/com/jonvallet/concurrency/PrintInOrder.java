@@ -1,7 +1,9 @@
+package com.jonvallet.concurrency;
+
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-class PrintInOrder {
+public class PrintInOrder {
 
     private CountDownLatch firstFinished = new CountDownLatch(1);
     private CountDownLatch secondFinished = new CountDownLatch(1);
