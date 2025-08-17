@@ -1,43 +1,39 @@
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 class PrintInOrder {
 
-    private AtomicBoolean firstFinished = new AtomicBoolean(false);
-    private AtomicBoolean secondFinished = new AtomicBoolean(false);
+    private CountDownLatch firstFinished = new CountDownLatch(1);
+    private CountDownLatch secondFinished = new CountDownLatch(1);
     private String result = "";
 
     public void first(Runnable printFirst)  {
         // printFirst.run() outputs "first". Do not change or remove this line.
         printFirst.run();
         addResult("First");
-        firstFinished.set(true);
+        firstFinished.countDown();
     }
 
-    public void second(Runnable printSecond)  {
+    public void second(Runnable printSecond) {
 
         // printSecond.run() outputs "second". Do not change or remove this line.
-        while (!firstFinished.get()) {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+        try {
+            firstFinished.await(10, TimeUnit.MILLISECONDS);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
         printSecond.run();
         addResult("Second");
-        secondFinished.set(true);
-
+        secondFinished.countDown();
     }
 
     public void third(Runnable printThird) {
 
         // printThird.run() outputs "third". Do not change or remove this line.
-        while (!secondFinished.get()) {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+        try {
+            secondFinished.await(10, TimeUnit.MILLISECONDS);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
         printThird.run();
         addResult("Third");
