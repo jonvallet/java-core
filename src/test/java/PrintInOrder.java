@@ -7,7 +7,7 @@ class PrintInOrder {
     private CountDownLatch secondFinished = new CountDownLatch(1);
     private String result = "";
 
-    public void first(Runnable printFirst)  {
+    public void first(Runnable printFirst) {
         // printFirst.run() outputs "first". Do not change or remove this line.
         printFirst.run();
         addResult("First");
@@ -18,7 +18,9 @@ class PrintInOrder {
 
         // printSecond.run() outputs "second". Do not change or remove this line.
         try {
-            firstFinished.await(10, TimeUnit.MILLISECONDS);
+            if (!firstFinished.await(100, TimeUnit.MILLISECONDS)) {
+                throw new RuntimeException("First timed out");
+            }
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -31,7 +33,9 @@ class PrintInOrder {
 
         // printThird.run() outputs "third". Do not change or remove this line.
         try {
-            secondFinished.await(10, TimeUnit.MILLISECONDS);
+            if (!secondFinished.await(100, TimeUnit.MILLISECONDS)) {
+                throw new RuntimeException("Second timed out");
+            }
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
