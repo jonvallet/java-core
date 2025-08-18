@@ -1,6 +1,5 @@
-package concurrency;
+package com.jonvallet.concurrency;
 
-import com.jonvallet.concurrency.PrintInOrder;
 import org.awaitility.Awaitility;
 import org.junit.jupiter.api.Test;
 

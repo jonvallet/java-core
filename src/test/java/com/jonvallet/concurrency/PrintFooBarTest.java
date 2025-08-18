@@ -1,6 +1,5 @@
-package concurrency;
+package com.jonvallet.concurrency;
 
-import com.jonvallet.concurrency.PrintFooBar;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.ExecutorService;
@@ -15,7 +14,6 @@ class PrintFooBarTest {
             service.submit(() -> printFooBar.foo(() -> System.out.println("foo")));
             service.submit(() -> printFooBar.bar(() -> System.out.println("bar")));
         }
-
     }
 
 }
