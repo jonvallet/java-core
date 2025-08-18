@@ -1,9 +1,7 @@
 package com.jonvallet.concurrency;
 
-import org.awaitility.Awaitility;
 import org.junit.jupiter.api.Test;
 
-import java.time.Duration;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -24,7 +22,7 @@ class PrintInOrderTest {
         }
 
         var expectedValue = "FirstSecondThird";
-        Awaitility.await().atMost(Duration.ofMillis(500)).untilAsserted(() -> assertEquals(expectedValue, po.getResult()));
+        assertEquals(expectedValue, po.getResult());
     }
 
 }
